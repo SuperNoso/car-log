@@ -313,10 +313,14 @@ footer{text-align:center;color:var(--ink-soft);font-size:14px;margin-top:18px;pa
           <select id="f_optype">
             <option value="يومية">يومية</option>
             <option value="نصف يوم">نصف يوم</option>
+            <option value="أوفرداي">أوفرداي</option>
+            <option value="يومية في سهرة">يومية في سهرة</option>
+            <option value="يومية في مطار">يومية في مطار</option>
             <option value="مطار">مطار</option>
             <option value="سهرة عشاء">سهرة عشاء</option>
             <option value="اخرى">اخرى</option>
           </select>
+          <input type="text" id="f_optype_other" placeholder="اكتب نوع التشغيلة" style="display:none;margin-top:6px;">
         </div>
         <div class="field">
           <label>اسم المرشد</label>
@@ -336,6 +340,11 @@ footer{text-align:center;color:var(--ink-soft);font-size:14px;margin-top:18px;pa
             <option value="اتش وان">اتش وان</option>
             <option value="اخرى">اخرى</option>
           </select>
+        </div>
+        <div class="field">
+          <label>اسم الشركة (اختياري)</label>
+          <input type="text" id="f_company" list="companyList" placeholder="اسم الشركة">
+          <datalist id="companyList"></datalist>
         </div>
         <div class="field">
           <label>عدد الزبائن</label>
@@ -360,6 +369,18 @@ footer{text-align:center;color:var(--ink-soft);font-size:14px;margin-top:18px;pa
         <button class="btn btn-gold btn-sm" id="exportBtnTrips">⬇ تصدير Excel</button>
         <button class="btn btn-ghost btn-sm" id="emailBtnTrips">📧 إيميل</button>
         <button class="btn btn-ghost btn-sm" id="waBtnTrips">📱 واتساب</button>
+      </div>
+    </div>
+    <div class="toolbar" style="margin-top:-6px;">
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+        <span style="font-size:13.5px;color:var(--ink-soft);">تصدير من</span>
+        <input type="date" id="exportFrom_trips" style="padding:6px 10px;border-radius:8px;border:1.5px solid var(--line);font-family:'Tajawal';">
+        <span style="font-size:13.5px;color:var(--ink-soft);">إلى</span>
+        <input type="date" id="exportTo_trips" style="padding:6px 10px;border-radius:8px;border:1.5px solid var(--line);font-family:'Tajawal';">
+        <span style="font-size:13.5px;color:var(--ink-soft);">الشركة</span>
+        <select id="exportCompany_trips" style="padding:6px 10px;border-radius:8px;border:1.5px solid var(--line);font-family:'Tajawal';">
+          <option value="">كل الشركات</option>
+        </select>
       </div>
     </div>
 
@@ -442,6 +463,38 @@ footer{text-align:center;color:var(--ink-soft);font-size:14px;margin-top:18px;pa
       </div>
     </div>
 
+    <div class="card" id="custodyCard">
+      <h2>💰 عهدة العربية</h2>
+      <div class="summary-stats" style="margin-bottom:12px;">
+        <div class="stat-chip"><b id="custodyTotal">0</b><span>إجمالي العهدة المضافة</span></div>
+        <div class="stat-chip"><b id="custodySpent">0</b><span>إجمالي المصاريف المخصومة</span></div>
+        <div class="stat-chip"><b id="custodyRemaining">0</b><span>الرصيد المتبقي</span></div>
+      </div>
+      <button class="btn btn-ghost btn-sm" id="addCustodyBtn">+ إضافة عهدة جديدة</button>
+      <div class="card" id="custodyFormCard" style="display:none;box-shadow:none;border:1.5px solid var(--line);margin-top:12px;padding:14px;">
+        <h2 id="custodyFormTitle" style="font-size:16.5px;">إضافة عهدة جديدة</h2>
+        <div class="form-grid">
+          <div class="field">
+            <label>التاريخ</label>
+            <input type="date" id="c_date">
+          </div>
+          <div class="field">
+            <label>المبلغ (ج.م)</label>
+            <input type="number" id="c_amount" min="0" placeholder="0">
+          </div>
+          <div class="field">
+            <label>بيان (اختياري)</label>
+            <input type="text" id="c_note" placeholder="مثال: عهدة شهر يناير">
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-primary" id="saveCustodyBtn">حفظ</button>
+          <button class="btn btn-ghost" id="cancelCustodyBtn">إلغاء</button>
+        </div>
+      </div>
+      <div id="custodyListWrap" style="margin-top:14px;"></div>
+    </div>
+
     <div class="card" id="expFormCard" style="display:none;">
       <h2 id="expFormTitle">إضافة مصروف جديد</h2>
       <div class="form-grid">
@@ -458,6 +511,7 @@ footer{text-align:center;color:var(--ink-soft);font-size:14px;margin-top:18px;pa
             <option value="مستلزمات">مستلزمات</option>
             <option value="اخرى">اخرى</option>
           </select>
+          <input type="text" id="g_category_other" placeholder="اكتب نوع المصروف" style="display:none;margin-top:6px;">
         </div>
         <div class="field">
           <label>بيان (اختياري)</label>
@@ -481,6 +535,14 @@ footer{text-align:center;color:var(--ink-soft);font-size:14px;margin-top:18px;pa
         <button class="btn btn-gold btn-sm" id="exportBtnExp">⬇ تصدير Excel</button>
         <button class="btn btn-ghost btn-sm" id="emailBtnExp">📧 إيميل</button>
         <button class="btn btn-ghost btn-sm" id="waBtnExp">📱 واتساب</button>
+      </div>
+    </div>
+    <div class="toolbar" style="margin-top:-6px;">
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+        <span style="font-size:13.5px;color:var(--ink-soft);">تصدير من</span>
+        <input type="date" id="exportFrom_exp" style="padding:6px 10px;border-radius:8px;border:1.5px solid var(--line);font-family:'Tajawal';">
+        <span style="font-size:13.5px;color:var(--ink-soft);">إلى</span>
+        <input type="date" id="exportTo_exp" style="padding:6px 10px;border-radius:8px;border:1.5px solid var(--line);font-family:'Tajawal';">
       </div>
     </div>
 
@@ -549,6 +611,7 @@ footer{text-align:center;color:var(--ink-soft);font-size:14px;margin-top:18px;pa
 <!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script>
 const firebaseConfig = {
   apiKey: "AIzaSyDTVk9oEdT5jJu59CckMzeBiY6H6jIcE3A",
@@ -566,11 +629,26 @@ db.enablePersistence({synchronizeTabs:true}).catch(err=>{
 });
 const entriesCol = db.collection('entries');
 const expensesCol = db.collection('expenses');
+const custodyCol = db.collection('custody');
+
+// تسجيل دخول مجهول (Anonymous) تلقائي وصامت — مطلوب عشان قواعد الأمان الجديدة
+// اللي بتسمح بالوصول لأي حد "مسجّل دخول" (ولو مجهول)، بدل ما تكون مفتوحة للنت كله
+const authReady = new Promise((resolve, reject)=>{
+  firebase.auth().onAuthStateChanged(user=>{
+    if(user){ resolve(user); }
+  });
+  firebase.auth().signInAnonymously().catch(err=>{
+    console.error('Anonymous sign-in failed', err);
+    reject(err);
+  });
+});
 </script>
 
 <script>
 let entries = [];
 let expenses = [];
+let custody = [];
+let editingCustodyId = null;
 let trashEntries = [];
 let trashExpenses = [];
 let editingId = null;
@@ -648,7 +726,23 @@ async function backupToLocalFileIfLinked(){
   catch(e){ console.error('backup write failed', e); }
 }
 
+function downloadBackupNow(){
+  const blob = new Blob([buildDataText()], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'نسخة_احتياطية_التشغيلات_' + todayISO() + '.json';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+  setConnStatus('ok', '☁️ متزامن سحابيًا — تم تنزيل نسخة احتياطية دلوقتي (المتصفح ده مش بيدعم الربط المباشر بملف)');
+}
 async function connectNewFile(){
+  if(!FS_SUPPORTED){
+    downloadBackupNow();
+    return;
+  }
   try{
     fileHandle = await window.showSaveFilePicker({
       suggestedName: 'نسخة_احتياطية_التشغيلات.json',
@@ -657,9 +751,18 @@ async function connectNewFile(){
     await writeToHandle();
     await idbSet('fileHandle', fileHandle);
     setConnStatus('ok', '☁️ متزامن سحابيًا + 💾 نسخة احتياطية على الجهاز: ' + fileHandle.name);
-  }catch(e){ /* user cancelled */ }
+  }catch(e){
+    if(e && e.name === 'AbortError') return; // المستخدم قفل النافذة، ده مش خطأ
+    console.error('connectNewFile failed', e);
+    alert('حصلت مشكلة في إنشاء النسخة الاحتياطية على الجهاز، هيتم تنزيل نسخة عادية بدل ذلك.\n(تفاصيل الخطأ في الـ Console: F12)');
+    downloadBackupNow();
+  }
 }
 async function connectExistingFile(){
+  if(!FS_SUPPORTED){
+    alert('ربط نسخة احتياطية موجودة متاح بس على متصفح Chrome أو Edge على الكمبيوتر.\nتقدر تستخدم زرار "إنشاء نسخة احتياطية جديدة" علشان تنزل نسخة دلوقتي من أي متصفح.');
+    return;
+  }
   try{
     const [handle] = await window.showOpenFilePicker({
       types: [{description:'ملف نسخة احتياطية', accept:{'application/json':['.json']}}]
@@ -670,7 +773,11 @@ async function connectExistingFile(){
     await writeToHandle();
     await idbSet('fileHandle', fileHandle);
     setConnStatus('ok', '☁️ متزامن سحابيًا + 💾 نسخة احتياطية على الجهاز: ' + fileHandle.name);
-  }catch(e){ /* user cancelled */ }
+  }catch(e){
+    if(e && e.name === 'AbortError') return;
+    console.error('connectExistingFile failed', e);
+    alert('حصلت مشكلة في ربط الملف.\n(تفاصيل الخطأ في الـ Console: F12)');
+  }
 }
 
 async function tryRestoreHandle(){
@@ -799,6 +906,10 @@ function attachFirestoreListeners(){
     if(document.getElementById('trashView').style.display !== 'none') renderTrash();
     backupToLocalFileIfLinked();
   }, err=>console.error('expenses listener error', err));
+  custodyCol.onSnapshot(snap=>{
+    custody = snap.docs.map(d=>({id:d.id, ...d.data()}));
+    renderCustody();
+  }, err=>console.error('custody listener error', err));
 
   // تنظيف دوري للمحذوفات اللي عدت عليها ساعة (كل دقيقة، وعند فتح الملف)
   cleanupExpiredTrash();
@@ -815,6 +926,12 @@ async function loadData(){
 
   setConnStatus('warn', 'جاري الاتصال بقاعدة البيانات السحابية...');
   if(FS_SUPPORTED) await tryRestoreHandle();
+  try{
+    await authReady; // استنى تسجيل الدخول المجهول قبل قراءة/كتابة البيانات
+  }catch(err){
+    setConnStatus('warn', '⚠️ تعذر تسجيل الدخول التلقائي — راجع إعدادات Firebase');
+    return;
+  }
   attachFirestoreListeners();
   refreshConnStatus();
   renderAll();
@@ -938,6 +1055,7 @@ function renderList(){
       +     '</div>'
       +   '</div>'
       +   '<div class="ticket-names" style="font-size:13px;">'+(e.driver||'-')+' <span>/ سائق</span></div>'
+      +   (e.company ? '<div class="ticket-names" style="font-size:12.5px;color:var(--ink-soft);">🏢 '+e.company+'</div>' : '')
       + '</div>'
       + '<div class="ticket-divider"></div>'
       + '<div class="ticket-amount">'
@@ -964,8 +1082,16 @@ function renderMonthsTable(){
 function renderDatalists(){
   const guides = Array.from(new Set(entries.map(e=>e.guide).filter(Boolean)));
   const drivers = Array.from(new Set(entries.map(e=>e.driver).filter(Boolean)));
+  const companies = Array.from(new Set(entries.map(e=>e.company).filter(Boolean)));
   document.getElementById('guideList').innerHTML = guides.map(g=>'<option value="'+g+'">').join('');
   document.getElementById('driverList').innerHTML = drivers.map(d=>'<option value="'+d+'">').join('');
+  document.getElementById('companyList').innerHTML = companies.map(c=>'<option value="'+c+'">').join('');
+  const expSel = document.getElementById('exportCompany_trips');
+  if(expSel){
+    const current = expSel.value;
+    expSel.innerHTML = '<option value="">كل الشركات</option>' + companies.map(c=>'<option value="'+c+'">'+c+'</option>').join('');
+    if(companies.includes(current)) expSel.value = current;
+  }
 }
 function renderInsights(){
   const monthEntries = entries.filter(e=>monthKey(e.date)===selectedMonth);
@@ -1083,6 +1209,7 @@ function renderExpenses(){
   renderExpenseSummary();
   renderExpenseList();
   renderExpenseMonthsTable();
+  renderCustody();
 }
 function renderAll(){ render(); renderExpenses(); }
 
@@ -1095,24 +1222,34 @@ function openForm(title){
 function closeForm(){
   document.getElementById('formCard').style.display='none';
   editingId = null;
-  ['f_guide','f_driver','f_amount','f_customers'].forEach(id=>document.getElementById(id).value='');
+  ['f_guide','f_driver','f_amount','f_customers','f_company'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('f_date').value = todayISO();
   document.getElementById('f_optype').value = 'يومية';
+  document.getElementById('f_optype_other').value = '';
+  document.getElementById('f_optype_other').style.display = 'none';
   document.getElementById('f_vehicle').value = 'ملاكي';
   document.getElementById('conflictWarning').style.display='none';
 }
+document.getElementById('f_optype').addEventListener('change', function(){
+  document.getElementById('f_optype_other').style.display = this.value==='اخرى' ? 'block' : 'none';
+});
 document.getElementById('addBtn').onclick = ()=>{ editingId=null; closeForm(); openForm('إضافة تشغيلة جديدة'); };
 document.getElementById('cancelBtn').onclick = closeForm;
 
 document.getElementById('saveBtn').onclick = async ()=>{
   const date = document.getElementById('f_date').value || todayISO();
-  const optype = document.getElementById('f_optype').value;
+  let optype = document.getElementById('f_optype').value;
+  if(optype === 'اخرى'){
+    const customType = document.getElementById('f_optype_other').value.trim();
+    if(customType) optype = customType;
+  }
   const guide = document.getElementById('f_guide').value.trim();
   const driver = document.getElementById('f_driver').value.trim();
   const vehicle = document.getElementById('f_vehicle').value;
+  const company = document.getElementById('f_company').value.trim();
   const customers = Number(document.getElementById('f_customers').value || 0);
   const amount = Number(document.getElementById('f_amount').value || 0);
-  const data = {date, optype, guide, driver, vehicle, customers, amount};
+  const data = {date, optype, guide, driver, vehicle, company, customers, amount};
 
   const id = editingId || uid();
   try{
@@ -1126,10 +1263,20 @@ window.startEdit = (id)=>{
   if(!e) return;
   editingId = id;
   document.getElementById('f_date').value = e.date;
-  document.getElementById('f_optype').value = e.optype;
+  const knownTypes = ['يومية','نصف يوم','أوفرداي','يومية في سهرة','يومية في مطار','مطار','سهرة عشاء','اخرى'];
+  if(knownTypes.includes(e.optype)){
+    document.getElementById('f_optype').value = e.optype;
+    document.getElementById('f_optype_other').style.display = 'none';
+    document.getElementById('f_optype_other').value = '';
+  } else {
+    document.getElementById('f_optype').value = 'اخرى';
+    document.getElementById('f_optype_other').style.display = 'block';
+    document.getElementById('f_optype_other').value = e.optype;
+  }
   document.getElementById('f_guide').value = e.guide;
   document.getElementById('f_driver').value = e.driver;
   document.getElementById('f_vehicle').value = e.vehicle;
+  document.getElementById('f_company').value = e.company || '';
   document.getElementById('f_customers').value = e.customers;
   document.getElementById('f_amount').value = e.amount;
   openForm('تعديل التشغيلة');
@@ -1156,13 +1303,22 @@ function closeExpForm(){
   document.getElementById('g_amount').value='';
   document.getElementById('g_date').value = todayISO();
   document.getElementById('g_category').value = 'صيانة';
+  document.getElementById('g_category_other').value = '';
+  document.getElementById('g_category_other').style.display = 'none';
 }
+document.getElementById('g_category').addEventListener('change', function(){
+  document.getElementById('g_category_other').style.display = this.value==='اخرى' ? 'block' : 'none';
+});
 document.getElementById('addExpBtn').onclick = ()=>{ editingExpenseId=null; closeExpForm(); openExpForm('إضافة مصروف جديد'); };
 document.getElementById('cancelExpBtn').onclick = closeExpForm;
 
 document.getElementById('saveExpBtn').onclick = async ()=>{
   const date = document.getElementById('g_date').value || todayISO();
-  const category = document.getElementById('g_category').value;
+  let category = document.getElementById('g_category').value;
+  if(category === 'اخرى'){
+    const customCat = document.getElementById('g_category_other').value.trim();
+    if(customCat) category = customCat;
+  }
   const note = document.getElementById('g_note').value.trim();
   const amount = Number(document.getElementById('g_amount').value || 0);
   const data = {date, category, note, amount};
@@ -1179,7 +1335,16 @@ window.startEditExpense = (id)=>{
   if(!e) return;
   editingExpenseId = id;
   document.getElementById('g_date').value = e.date;
-  document.getElementById('g_category').value = e.category;
+  const knownCats = ['صيانة','بنزين','نظافة','مستلزمات','اخرى'];
+  if(knownCats.includes(e.category)){
+    document.getElementById('g_category').value = e.category;
+    document.getElementById('g_category_other').style.display = 'none';
+    document.getElementById('g_category_other').value = '';
+  } else {
+    document.getElementById('g_category').value = 'اخرى';
+    document.getElementById('g_category_other').style.display = 'block';
+    document.getElementById('g_category_other').value = e.category;
+  }
   document.getElementById('g_note').value = e.note || '';
   document.getElementById('g_amount').value = e.amount;
   openExpForm('تعديل المصروف');
@@ -1191,38 +1356,148 @@ window.deleteExpense = async (id)=>{
 };
 document.getElementById('monthSelectExp').onchange = (e)=>{ selectedExpenseMonth = e.target.value; renderExpenses(); };
 
+/* ============== CUSTODY: عهدة العربية ============== */
+function renderCustody(){
+  const totalCustody = custody.reduce((s,c)=>s+Number(c.amount||0),0);
+  const totalSpent = expenses.reduce((s,e)=>s+Number(e.amount||0),0);
+  const remaining = totalCustody - totalSpent;
+  document.getElementById('custodyTotal').textContent = fmtNum(totalCustody);
+  document.getElementById('custodySpent').textContent = fmtNum(totalSpent);
+  const remEl = document.getElementById('custodyRemaining');
+  remEl.textContent = fmtNum(remaining);
+  remEl.style.color = remaining < 0 ? 'var(--terracotta)' : '';
+
+  const wrap = document.getElementById('custodyListWrap');
+  if(!custody.length){
+    wrap.innerHTML = '<div class="empty">لا توجد عهد مسجلة بعد</div>';
+    return;
+  }
+  const sorted = [...custody].sort((a,b)=> b.date.localeCompare(a.date));
+  wrap.innerHTML = sorted.map(c=>{
+    return '<div class="ticket">'
+      + '<div class="ticket-body">'
+      +   '<div class="ticket-names">'+(c.note||'عهدة')+'</div>'
+      +   '<div class="ticket-names" style="font-size:13px;">'+c.date+'</div>'
+      + '</div>'
+      + '<div class="ticket-divider"></div>'
+      + '<div class="ticket-amount">'
+      +   '<div class="amt">'+fmtNum(c.amount)+' ج.م</div>'
+      +   '<div class="ticket-actions">'
+      +     '<button class="icon-btn" onclick="startEditCustody(\''+c.id+'\')" title="تعديل">✎</button>'
+      +     '<button class="icon-btn" onclick="deleteCustody(\''+c.id+'\')" title="حذف">🗑</button>'
+      +   '</div>'
+      + '</div>'
+      + '</div>';
+  }).join('');
+}
+function openCustodyForm(title){
+  document.getElementById('custodyFormTitle').textContent = title;
+  document.getElementById('custodyFormCard').style.display='block';
+  document.getElementById('custodyFormCard').scrollIntoView({behavior:'smooth', block:'center'});
+}
+function closeCustodyForm(){
+  document.getElementById('custodyFormCard').style.display='none';
+  editingCustodyId = null;
+  document.getElementById('c_amount').value='';
+  document.getElementById('c_note').value='';
+  document.getElementById('c_date').value = todayISO();
+}
+document.getElementById('addCustodyBtn').onclick = ()=>{ editingCustodyId=null; closeCustodyForm(); openCustodyForm('إضافة عهدة جديدة'); };
+document.getElementById('cancelCustodyBtn').onclick = closeCustodyForm;
+document.getElementById('saveCustodyBtn').onclick = async ()=>{
+  const date = document.getElementById('c_date').value || todayISO();
+  const amount = Number(document.getElementById('c_amount').value || 0);
+  const note = document.getElementById('c_note').value.trim();
+  const data = {date, amount, note};
+  const id = editingCustodyId || uid();
+  try{
+    await custodyCol.doc(id).set(data);
+  }catch(err){ console.error('save custody failed', err); alert('حصلت مشكلة في الحفظ'); }
+  closeCustodyForm();
+};
+window.startEditCustody = (id)=>{
+  const c = custody.find(x=>x.id===id);
+  if(!c) return;
+  editingCustodyId = id;
+  document.getElementById('c_date').value = c.date;
+  document.getElementById('c_amount').value = c.amount;
+  document.getElementById('c_note').value = c.note || '';
+  openCustodyForm('تعديل العهدة');
+};
+window.deleteCustody = async (id)=>{
+  if(!confirm('هل تريد حذف هذه العهدة؟ (الحذف هنا نهائي)')) return;
+  try{ await custodyCol.doc(id).delete(); }
+  catch(err){ console.error('delete custody failed', err); }
+};
+
 /* ============== EXPORT: EXCEL ============== */
 document.getElementById('exportBtnTrips').onclick = ()=>{
-  const headers = ['التاريخ','نوع التشغيلة','اسم المرشد','اسم السائق','نوع العربية','عدد الزبائن','المبلغ'];
-  const sorted = [...entries].sort((a,b)=>a.date.localeCompare(b.date));
-  const rows = sorted.map(e=>[e.date, e.optype, e.guide, e.driver, e.vehicle, e.customers, e.amount]);
-  const ws = XLSX.utils.aoa_to_sheet([headers, ...rows]);
-  ws['!cols'] = [{wch:12},{wch:14},{wch:18},{wch:18},{wch:12},{wch:12},{wch:12}];
+  const from = document.getElementById('exportFrom_trips').value;
+  const to = document.getElementById('exportTo_trips').value;
+  const companyFilter = document.getElementById('exportCompany_trips').value;
 
-  const keys = monthKeysFor(entries).sort();
+  const filtered = entries.filter(e=>{
+    if(from && e.date < from) return false;
+    if(to && e.date > to) return false;
+    if(companyFilter && (e.company||'') !== companyFilter) return false;
+    return true;
+  });
+
+  const headers = ['التاريخ','نوع التشغيلة','اسم المرشد','اسم السائق','نوع العربية','اسم الشركة','عدد الزبائن','المبلغ'];
+  const sorted = [...filtered].sort((a,b)=>a.date.localeCompare(b.date));
+  const rows = sorted.map(e=>[e.date, e.optype, e.guide, e.driver, e.vehicle, e.company||'', e.customers, e.amount]);
+  const totalAmount = sorted.reduce((s,e)=>s+Number(e.amount||0),0);
+  rows.push(['','','','','','','الإجمالي', totalAmount]);
+  const ws = XLSX.utils.aoa_to_sheet([headers, ...rows]);
+  ws['!cols'] = [{wch:12},{wch:16},{wch:18},{wch:18},{wch:12},{wch:18},{wch:12},{wch:12}];
+
+  const keys = monthKeysFor(filtered).sort();
   const monthRows = keys.map(k=>{
-    const list = entries.filter(e=>monthKey(e.date)===k);
+    const list = filtered.filter(e=>monthKey(e.date)===k);
     const total = list.reduce((s,e)=>s+Number(e.amount||0),0);
     const cust = list.reduce((s,e)=>s+Number(e.customers||0),0);
     return [fmtMonth(k), list.length, cust, total];
   });
   const ws2 = XLSX.utils.aoa_to_sheet([['الشهر','عدد التشغيلات','عدد الزبائن','الإجمالي'], ...monthRows]);
 
+  const companyMap = {};
+  filtered.forEach(e=>{
+    const c = e.company || 'بدون شركة';
+    if(!companyMap[c]) companyMap[c] = {count:0, total:0};
+    companyMap[c].count++;
+    companyMap[c].total += Number(e.amount||0);
+  });
+  const companyRows = Object.entries(companyMap).map(([name,v])=>[name, v.count, v.total]);
+  const ws3 = XLSX.utils.aoa_to_sheet([['الشركة','عدد التشغيلات','الإجمالي'], ...companyRows]);
+
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, 'التشغيلات');
   XLSX.utils.book_append_sheet(wb, ws2, 'إجمالي الشهور');
-  XLSX.writeFile(wb, 'سجل_التشغيلات.xlsx');
+  XLSX.utils.book_append_sheet(wb, ws3, 'حسب الشركة');
+  const fname = companyFilter ? ('سجل_التشغيلات_'+companyFilter+'.xlsx') : 'سجل_التشغيلات.xlsx';
+  XLSX.writeFile(wb, fname);
 };
 document.getElementById('exportBtnExp').onclick = ()=>{
+  const from = document.getElementById('exportFrom_exp').value;
+  const to = document.getElementById('exportTo_exp').value;
+
+  const filtered = expenses.filter(e=>{
+    if(from && e.date < from) return false;
+    if(to && e.date > to) return false;
+    return true;
+  });
+
   const headers = ['التاريخ','نوع المصروف','بيان','المبلغ'];
-  const sorted = [...expenses].sort((a,b)=>a.date.localeCompare(b.date));
+  const sorted = [...filtered].sort((a,b)=>a.date.localeCompare(b.date));
   const rows = sorted.map(e=>[e.date, e.category, e.note||'', e.amount]);
+  const totalAmount = sorted.reduce((s,e)=>s+Number(e.amount||0),0);
+  rows.push(['','','الإجمالي', totalAmount]);
   const ws = XLSX.utils.aoa_to_sheet([headers, ...rows]);
   ws['!cols'] = [{wch:12},{wch:14},{wch:24},{wch:12}];
 
-  const keys = monthKeysFor(expenses).sort();
+  const keys = monthKeysFor(filtered).sort();
   const monthRows = keys.map(k=>{
-    const list = expenses.filter(e=>monthKey(e.date)===k);
+    const list = filtered.filter(e=>monthKey(e.date)===k);
     const total = list.reduce((s,e)=>s+Number(e.amount||0),0);
     return [fmtMonth(k), list.length, total];
   });
